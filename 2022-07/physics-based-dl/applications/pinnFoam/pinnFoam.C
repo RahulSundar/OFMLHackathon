@@ -31,24 +31,24 @@ Description
 \*---------------------------------------------------------------------------*/
 
 // libtorch
-#include <torch/torch.h>
-#include "ATen/Functions.h"
+#include <torch/torch.h>    //Basic Torch Lib 
+#include "ATen/Functions.h" //Geneeral class funcs
 #include "ATen/core/interned_strings.h"
-#include "torch/nn/modules/activation.h"
-#include "torch/optim/lbfgs.h"
-#include "torch/optim/rmsprop.h"
+#include "torch/nn/modules/activation.h"//activation function modules
+#include "torch/optim/lbfgs.h"//optimizer
+#include "torch/optim/rmsprop.h"//rms prop optimizer
 
-// STL 
+// STL - Standard Template Libraries
 #include <algorithm>
 #include <random> 
 #include <numeric>
 #include <cmath>
 #include <filesystem>
 
-// OpenFOAM 
+// OpenFOAM - Finite Volume Functionalities
 #include "fvCFD.H"
 
-// libtorch-OpenFOAM data transfer
+// libtorch-OpenFOAM data transfer //code works without this
 #include "torchFunctions.C"
 #include "fileNameGenerator.H"
 
@@ -59,27 +59,29 @@ using namespace torch::indexing;
 
 int main(int argc, char *argv[])
 {
+	
+	//To declare the variables that would be predicted by the network
     argList::addOption
     (
-        "volFieldName",
-        "string",
-        "Name of the volume (cell-centered) field approximated by the neural network."
+        "vol FieldName",   //field name
+        "string",           // datatype 
+        "Name of the volume (cell-centered) field approximated by the neural network."  //value
     );
-
+//Architechture Config
     argList::addOption
     (
         "hiddenLayers",
         "int,int,int,...",
         "A sequence of hidden-layer depths."
     );
-
+  //Prescribes the Learning rate
     argList::addOption
     (
         "optimizerStep",
         "double",
         "Step of the optimizer."
     );
-
+   //Max Iterations
     argList::addOption
     (
         "maxIterations",
@@ -91,7 +93,7 @@ int main(int argc, char *argv[])
     #include "createTime.H"
     #include "createMesh.H"
     
-    #include "createFields.H"
+    #include "createFields.H"   //defines fields
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
     // Initialize hyperparameters 
@@ -104,14 +106,14 @@ int main(int argc, char *argv[])
     
     // - Initialize hyperparameters from command line arguments if they are provided
     if (args.found("hiddenLayers") && 
-        args.found("optimizerStep") &&
+        args.found("optimizerStep") &&   //this is used if we run openfoam from python script(grid search)
         args.found("maxIterations"))
     {
         hiddenLayers = args.get<DynamicList<label>>("hiddenLayers");
         optimizerStep = args.get<scalar>("optimizerStep");
         maxIterations = args.get<label>("maxIterations");
     } 
-    else // Initialize from system/fvSolution.AI.approximator sub-dict.
+    else // Initialize from system/fvSolution.AI.approximator sub-dict. //Where is this direc?
     {
         const fvSolution& fvSolutionDict (mesh);
         const dictionary& aiDict = fvSolutionDict.subDict("AI");
@@ -121,7 +123,7 @@ int main(int argc, char *argv[])
         maxIterations = aiDict.get<label>("maxIterations");
     }
     
-    // Use double-precision floating-point arithmetic. 
+    // Use double-precision floating-point arithmetic for all operations  
     torch::set_default_dtype(
         torch::scalarTypeToTypeMeta(torch::kDouble)
     );
@@ -146,7 +148,7 @@ int main(int argc, char *argv[])
     // TODO: generalize here for vector / scalar data. 
     nn->push_back(
         torch::nn::Linear(hiddenLayers[hiddenLayers.size() - 1], 1)
-    );
+    );  
     
     // Initialize training data 
     
@@ -158,7 +160,7 @@ int main(int argc, char *argv[])
     torch::Tensor vf_tensor = torch::from_blob(vf_data, {vf.size(), 1});
     //  - Reinterpret OpenFOAM's vectorField as vector* array 
     volVectorField& cc = const_cast<volVectorField&>(mesh.C());
-    volVectorField::pointer cc_data = cc.ref().data();
+    volVectorField::pointer cc_data = cc.ref().data();   //cc cellcentres
     //  - Use the scalar* (volScalarField::pointer) to view 
     //    the volScalarField as torch::Tensor without copying data. 
     torch::Tensor cc_tensor = torch::from_blob(cc_data, {cc.size(),3});

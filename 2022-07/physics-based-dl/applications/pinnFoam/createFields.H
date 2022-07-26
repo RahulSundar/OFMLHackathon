@@ -3,7 +3,7 @@
     (
         IOobject
         (
-            "vf",
+            "vf",   //scalar field p0 //solver data
             runTime.timeName(), 
             mesh, 
             IOobject::MUST_READ,
@@ -12,16 +12,16 @@
         mesh
     );
 
-    volScalarField vf_nn("vf_nn", vf);
+    volScalarField vf_nn("vf_nn", vf); //from network
 
-    volScalarField error_c 
+    volScalarField error_c   
     (
         IOobject
         (
             "error_c", 
             runTime.timeName(), 
             mesh, 
-            IOobject::NO_READ, 
+            IOobject::NO_READ,        
             IOobject::AUTO_WRITE
         ),
         mesh, 
