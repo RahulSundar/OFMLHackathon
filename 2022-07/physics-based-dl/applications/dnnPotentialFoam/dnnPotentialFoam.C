@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
     //    );
 
         // Compute the data mse loss.
-        auto mse_data = mse_loss(O_predict, O_training);
+        auto mse_data = 4*mse_loss(O_predict, O_training);
       //  );
      //
         // Combine the losses into a Physics Informed Neural Network.
@@ -246,7 +246,7 @@ int main(int argc, char *argv[])
         dataFile << optimizerStep << "," << maxIterations << ","
             << delta_x << "," << epoch << ","
             << mse_data.item<double>() << ","
-        //    << mse_U.item<double>() << ","
+            << 0 << ","
             << mse.item<double>() << std::endl;
 
         if (mse.item<double>() < min_mse)
@@ -308,10 +308,10 @@ int main(int argc, char *argv[])
   //  volScalarField error_grad_c ("error_grad_c", Foam::mag(vf_grad - vf_nn_grad));
 
 
-    Info << "max(|field - field_nn|) = " << error_Phi_inf << endl;
-    Info << "mean(|field - field_nn|) = " << error_Phi_mean << endl;
-    Info << "max(|field - field_nn|) = " << error_U_inf << endl;
-    Info << "mean(|field - field_nn|) = " << error_U_mean << endl;
+    Info << "max(|Phi - Phi_nn|) = " << error_Phi_inf << endl;
+    Info << "mean(|Phi - Phi_nn|) = " << error_Phi_mean << endl;
+    Info << "max(|U - U_nn|) = " << error_U_inf << endl;
+    Info << "mean(|U - U_nn|) = " << error_U_mean << endl;
 
 
     // Write fields
