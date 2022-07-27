@@ -1,0 +1,38 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2206                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _76d719d1e6-20220624 OPENFOAM=2206 version=v2206
+Arch   : "LSB;label=32;scalar=64"
+Exec   : postProcess -func streamFunction
+Date   : Jul 25 2022
+Time   : 15:01:47
+Host   : pop-os
+PID    : 38927
+I/O    : uncollated
+Case   : /home/ryley/hackathon/OFMLHackathon/2022-07/physics-based-dl/run/cylinder
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Time = 0
+
+Reading fields:
+    surfaceScalarField: phi
+
+Executing functionObjects
+    functionObjects::streamFunction streamFunction calculating stream-function
+        Zero face: patch: 0 face: 0
+    functionObjects::streamFunction streamFunction writing field: streamFunction
+
+End
+

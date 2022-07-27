@@ -1,0 +1,74 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2206                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _76d719d1e6-20220624 OPENFOAM=2206 version=v2206
+Arch   : "LSB;label=32;scalar=64"
+Exec   : potentialFoam -withFunctionObjects -writePhi -writephi -writep
+Date   : Jul 25 2022
+Time   : 15:01:37
+Host   : pop-os
+PID    : 38743
+I/O    : uncollated
+Case   : /home/ryley/hackathon/OFMLHackathon/2022-07/physics-based-dl/run/cylinder
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+
+potentialFlow: Operating solver in PISO mode
+
+Reading velocity field U
+
+Constructing pressure field p
+
+Constructing velocity potential field Phi
+
+No MRF models present
+
+
+Calculating potential flow
+Using dynamicCode for functionObject error at line 51 in "/home/ryley/hackathon/OFMLHackathon/2022-07/physics-based-dl/run/cylinder/system/controlDict.functions.error"
+Could not load "/home/ryley/hackathon/OFMLHackathon/2022-07/physics-based-dl/run/cylinder/dynamicCode/platforms/linux64GccDPInt32Opt/lib/liberror_07d43f79c2caa9f072520f78f248b2496a86f281.so"
+/home/ryley/hackathon/OFMLHackathon/2022-07/physics-based-dl/run/cylinder/dynamicCode/platforms/linux64GccDPInt32Opt/lib/liberror_07d43f79c2caa9f072520f78f248b2496a86f281.so: cannot open shared object file: No such file or directory
+Creating new library in "dynamicCode/error/platforms/linux64GccDPInt32Opt/lib/liberror_07d43f79c2caa9f072520f78f248b2496a86f281.so"
+Invoking wmake libso /home/ryley/hackathon/OFMLHackathon/2022-07/physics-based-dl/run/cylinder/dynamicCode/error
+wmake libso /home/ryley/hackathon/OFMLHackathon/2022-07/physics-based-dl/run/cylinder/dynamicCode/error
+    ln: ./lnInclude
+    dep: functionObjectTemplate.C
+    Ctoo: functionObjectTemplate.C
+    link: /home/ryley/hackathon/OFMLHackathon/2022-07/physics-based-dl/run/cylinder/dynamicCode/error/../platforms/linux64GccDPInt32Opt/lib/liberror_07d43f79c2caa9f072520f78f248b2496a86f281.so
+GAMG:  Solving for Phi, Initial residual = 1, Final residual = 0.00645988, No Iterations 5
+GAMG:  Solving for Phi, Initial residual = 0.0126268, Final residual = 6.6182e-05, No Iterations 4
+GAMG:  Solving for Phi, Initial residual = 0.00260623, Final residual = 2.0189e-05, No Iterations 3
+GAMG:  Solving for Phi, Initial residual = 0.000910968, Final residual = 3.41138e-06, No Iterations 4
+Continuity error = 0.000135471
+Interpolated velocity error = 1.18729e-05
+
+Calculating approximate pressure field
+GAMG:  Solving for p, Initial residual = 1, Final residual = 0.00462909, No Iterations 4
+GAMG:  Solving for p, Initial residual = 0.0659642, Final residual = 0.000285859, No Iterations 5
+GAMG:  Solving for p, Initial residual = 0.0131468, Final residual = 9.02039e-05, No Iterations 3
+GAMG:  Solving for p, Initial residual = 0.00414426, Final residual = 3.4852e-05, No Iterations 4
+Looking up field U
+
+Reading inlet velocity uInfX
+
+U at inlet = 1 m/s
+Cylinder radius = 0.499614 m
+
+Evaluating analytical solution
+Writing relative error in U to "/home/ryley/hackathon/OFMLHackathon/2022-07/physics-based-dl/run/cylinder/0/error"
+ExecutionTime = 0.04 s  ClockTime = 10 s
+
+End
+
