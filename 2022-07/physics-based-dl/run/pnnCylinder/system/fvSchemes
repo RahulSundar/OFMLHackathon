@@ -10,44 +10,42 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    object      fvSolution;
+    object      fvSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-solvers
+ddtSchemes
 {
-    Phi
-    {
-        solver          GAMG;
-        smoother        DIC;
-        tolerance       1e-06;
-        relTol          0.01;
-    }
-
-    p
-    {
-        $Phi;
-    }
+    default         steadyState;
 }
 
-potentialFlow
+gradSchemes
 {
-    nNonOrthogonalCorrectors 3;
+    default         leastSquares;
 }
 
-AI
+divSchemes
 {
-    // Uncomment when parameterizing
-    // via the dictionary.
-    maxIterations 50000;
-    hiddenLayers (30 30 30 30 30);
-    optimizerStep 1e-04;
+    default         none;
 
-//    sphere
-//    {
-//        radius 0.25;
-//        center (0.5 0.5 0.5);
-//    }
+    div(phi,U)      bounded Gauss linear;
+
+    div(div(phi,U)) Gauss linear;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+}
+
+interpolationSchemes
+{
+    default         linear;
+}
+
+snGradSchemes
+{
+    default         corrected;
 }
 
 
